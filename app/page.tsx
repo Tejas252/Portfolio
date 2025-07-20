@@ -32,7 +32,10 @@ export default function Home() {
     useTransform(x, [-100, 100], [-50, 50]),
     springConfig,
   );
-  const handleMouseMove = (event: any) => {
+
+  // @ts-expect-error
+  // event has no implicit types
+  const handleMouseMove = (event) => {
     // console.log("🚀 ~ handleMouseMove ~ event:", event)
     const halfWidth = event.target.offsetWidth / 2;
     x.set(event.nativeEvent.offsetX - halfWidth); // set the x value, which is then used in transform and rotate
@@ -113,7 +116,7 @@ const stats = [
             MERN Stack Developer
           </div>
           <div className="text-card-foreground text-md text-center w-1/2 z-30 mt-4">
-            🖥️ Full of energy and expertise in Mern stack web development! 🌟 Crafting innovative and user-friendly websites is my passion. Let's collaborate and bring your ideas to life! 🌐💪
+            🖥️ Full of energy and expertise in Mern stack web development! 🌟 Crafting innovative and user-friendly websites is my passion. Let&aposs collaborate and bring your ideas to life! 🌐💪
           </div>
            <motion.div
               className="flex flex-wrap justify-center gap-4 my-8  z-30"

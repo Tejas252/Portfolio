@@ -3,7 +3,7 @@ import { generateText, streamText } from "ai"
 import { google } from "@ai-sdk/google"
 import { NextResponse } from "next/server";
 
-export const GET = async (request: NextRequest, response: NextRequest) => {
+export const GET = async (request: NextRequest) => {
     // const body = await request.json();
     // console.log("🚀 ~ POST ~ body:", body)
 
