@@ -88,33 +88,43 @@ export function FloatingChat({hideInput = false}: FloatingChatProps) {
     setIsLoading(true)
 
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
+      const response = await fetch("/api/ai?query=" + message, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: message }),
       })
 
       if (!response.ok) {
         throw new Error("Failed to send message")
       }
 
-      const data = await response.json()
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder("utf-8");
+      let done = false;
+      let assistantContent = "";
+
+      while (!done) {
+        const { value, done: readerDone } = await reader?.read() as any;
+        done = readerDone;
+        assistantContent += decoder.decode(value, { stream: !done });
+      }
+
+      console.log("🚀 ~ handleSendMessage ~ assistantContent:", assistantContent);
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: data.message,
+        content: assistantContent,
         role: "assistant",
         timestamp: new Date(),
-      }
+      };
 
-      setMessages((prev) => [...prev, assistantMessage])
+      setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
       console.error("Error sending message:", error)
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: "Sorry, I'm having trouble responding right now. Please try again later!",
+        content: "Sorry, I'm having trouble responding right now. Please contact to savaliyatejas108@gmail.com",
         role: "assistant",
         timestamp: new Date(),
       }
