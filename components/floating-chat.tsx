@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { MessageCircle, Send, X, Bot, User } from "lucide-react"
 import BorderFrame from "./border-frame"
+import ReactMarkdown from 'react-markdown'
 
 interface Message {
   id: string
@@ -55,6 +56,7 @@ export function FloatingChat({hideInput = false}: FloatingChatProps) {
   useEffect(() => {
     if(hideInput) return
     const handleScroll = () => {
+      const isMobile = window.innerWidth < 768
       const scrollPosition = window.scrollY
       console.log("🚀 ~ handleScroll ~ scrollPosition:", scrollPosition)
       const windowHeight = window.innerHeight
@@ -62,7 +64,7 @@ export function FloatingChat({hideInput = false}: FloatingChatProps) {
       const documentHeight = document.documentElement.scrollHeight
 
       // Minimize when scrolled past 50% of the page
-      if (scrollPosition > windowHeight * 0.1) {
+      if (scrollPosition > windowHeight * (isMobile ? 0.2 : 0.1)) {
         setIsMinimized(true)
       } else {
         setIsMinimized(false)
@@ -138,6 +140,7 @@ export function FloatingChat({hideInput = false}: FloatingChatProps) {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
       handleSendMessage()
+      setIsOpen(true)
     }
   }
 
@@ -153,7 +156,7 @@ export function FloatingChat({hideInput = false}: FloatingChatProps) {
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-md rounded-none"
           >
-            <Card className="bg-transparent w-full border-none shadow-none">
+            <Card className="sm:glass md:bg-transparent w-full border-none shadow-none">
               <CardContent>
                     <BorderFrame>
                 <div className="flex items-center space-x-3">
@@ -238,7 +241,7 @@ export function FloatingChat({hideInput = false}: FloatingChatProps) {
               damping: 30,
               duration: 0.6,
             }}
-            className="fixed bottom-8 z-50 w-96 max-w-[calc(100vw-2rem)]"
+            className="fixed bottom-8 z-50 w-100 max-w-[calc(100vw-2rem)]"
             style={{ transformOrigin: "bottom center" }}
           >
             <Card className="glass shadow-2xl">
@@ -252,7 +255,7 @@ export function FloatingChat({hideInput = false}: FloatingChatProps) {
                 </Button>
               </CardHeader>
               <CardContent className="p-0">
-                <ScrollArea className="h-80 p-4">
+                <ScrollArea className="h-100 p-4">
                   <div className="space-y-4">
                     {messages.map((msg) => (
                       <motion.div
@@ -273,9 +276,9 @@ export function FloatingChat({hideInput = false}: FloatingChatProps) {
                             }`}
                           >
                             {msg.role === "user" ? (
-                              <User className="h-4 w-4 text-primary-foreground" />
+                              <User className="h-4 w-10 text-primary-foreground" />
                             ) : (
-                              <Bot className="h-4 w-4 text-accent-foreground" />
+                              <Bot className="h-4 w-10 text-accent-foreground" />
                             )}
                           </div>
                           <div
@@ -283,7 +286,9 @@ export function FloatingChat({hideInput = false}: FloatingChatProps) {
                               msg.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"
                             }`}
                           >
-                            <p className="text-sm">{msg.content}</p>
+                            <p className="text-sm">
+                            <ReactMarkdown>{msg.content}</ReactMarkdown>
+                            </p>
                           </div>
                         </div>
                       </motion.div>

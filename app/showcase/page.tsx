@@ -92,7 +92,7 @@ const categories = ["All", "AI/ML", "Web App", "Analytics", "Blockchain", "IoT"]
 
 export default function ShowcasePage() {
   return (
-    <div className="relative min-h-screen pt-20 pb-16">
+    <div className="relative min-h-screen pt-20 pb-16 text-primary bg-gradient-to-br from-primary/7 via-primary/1 to-accent/5">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
 
@@ -104,7 +104,7 @@ export default function ShowcasePage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 gradient-text">Project Showcase</h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 hover:text-primary">Project Showcase</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Explore my portfolio of innovative projects spanning AI/ML, web development, blockchain, and IoT solutions.
             Each project represents a unique challenge solved with cutting-edge technology.

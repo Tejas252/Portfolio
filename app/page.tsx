@@ -69,7 +69,7 @@ const stats = [
         <div className="absolute inset-0 w-full h-full bg-background z-20 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
         <div className="h-1/2 z-30 flex flex-col items-center">
         <Boxes />
-          <div className="text-6xl text-primary z-30 group relative -mr-4" 
+          <div className="text-6xl text-center text-primary z-30 group relative -mr-4" 
           onMouseEnter={() => setHoveredIndex(1)}
           onMouseLeave={() => setHoveredIndex(null)}>
             <AnimatePresence mode="popLayout">
@@ -115,7 +115,7 @@ const stats = [
           <div className="text-xl text-card-foreground z-30 mt-1">
             MERN Stack Developer
           </div>
-          <div className="text-card-foreground text-md text-center w-1/2 z-30 mt-4">
+          <div className="text-card-foreground text-md text-center w-full px-4 lg:px-0 lg:w-1/2 z-30 mt-4">
             🖥️ Full of energy and expertise in Mern stack web development! 🌟 Crafting innovative and user-friendly websites is my passion. Let&aposs collaborate and bring your ideas to life! 🌐💪
           </div>
            <motion.div
@@ -193,11 +193,11 @@ const stats = [
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.6, duration: 0.8 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 my-16 px-4 z-30"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-16 px-4 z-30"
           >
             {stats.map((stat, index) => (
               <motion.div key={stat.label} whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
-                <Card className="p-6 text-center glass hover:shadow-lg transition-all duration-300">
+                <Card className="p-6 h-full text-center glass hover:shadow-lg transition-all duration-300">
                   <BorderFrame>
                   <div className="text-3xl font-bold text-primary mb-2">{stat.value}</div>
                   <div className="text-sm text-muted-foreground">{stat.label}</div>

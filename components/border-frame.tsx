@@ -8,7 +8,7 @@ export default function BorderFrame({
   className?: string;
 }) {
   return (
-    <div className={cn("relative border border-dashed border-primary/50", className)}>
+    <div className={cn("relative h-full border border-dashed border-primary/50", className)}>
       {/* Corner + signs (aligned precisely at the corners) */}
       <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2  text-card-foreground font-light text-lg leading-none">
         +
