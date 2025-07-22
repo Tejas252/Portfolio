@@ -50,9 +50,12 @@ export const POST = async (request: NextRequest) => {
 
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
+
+        // ** Parse the PDF
         const data = await pdfParse(buffer);
         const extractedText = data.text;
 
+        // ** Split the text
         const splitter = new RecursiveCharacterTextSplitter({
             chunkSize: 1000,
             chunkOverlap: 200,
