@@ -122,7 +122,7 @@ const stats = [
               className="flex flex-wrap justify-center gap-4 my-8  z-30"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
+              transition={{ delay: 0.1, duration: 0.8 }}
             >
               <Button size="lg" className="group">
                 {/* <Link href="/showcase"> */}
