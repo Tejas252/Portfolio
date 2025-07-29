@@ -22,12 +22,12 @@ async function initializeDatabase() {
     console.log("✅ Created database indexes");
     
     // Get collection stats
-    const stats = await ChatSession.collection.stats();
+    const documentCount = await ChatSession.countDocuments();
+    const indexCount = await ChatSession.collection.listIndexes().toArray();
+    
     console.log(`📊 Collection stats:`, {
-      documents: stats.count || 0,
-      avgObjSize: stats.avgObjSize || 0,
-      storageSize: stats.storageSize || 0,
-      indexes: stats.nindexes || 0
+      documents: documentCount,
+      indexes: indexCount.length
     });
     
     console.log("🎉 Database initialization completed successfully!");
