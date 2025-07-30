@@ -5,7 +5,7 @@ import { Boxes } from "@/components/ui/background-boxes";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {  Code, Download, Github, Link, Linkedin, Mail, Rocket } from "lucide-react";
+import { Code, Download, Github, Linkedin, Mail, Rocket } from "lucide-react";
 import {
   motion,
   useTransform,
@@ -14,6 +14,7 @@ import {
   useSpring,
 } from "motion/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
@@ -42,38 +43,34 @@ export default function Home() {
   };
 
   const skills = [
-  "React",
-  "Next.js",
-  "TypeScript",
-  "Python",
-  "AI/ML",
-  "Node.js",
-  "TensorFlow",
-  "PyTorch",
-  "AWS",
-  "Docker",
-  "GraphQL",
-  "PostgreSQL",
-]
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Node.js",
+    "Docker",
+    "GraphQL",
+    "MongoDB",
+    "PostgreSQL",
+  ]
 
-const stats = [
-  { label: "Projects Completed", value: "50+" },
-  { label: "Years Experience", value: "5+" },
-  { label: "AI Models Deployed", value: "15+" },
-  { label: "Happy Clients", value: "30+" },
-]
+  const stats = [
+    { label: "Projects", value: "5+" },
+    { label: "Years Experience", value: "2+" },
+    { label: "Lines of Code", value: "100K+" },
+    { label: "Commits", value: "500+" },
+  ]
 
   return (
     <>
       <div className="h-screen relative w-full overflow-hidden bg-background flex flex-col items-center justify-center rounded-lg border">
         <div className="absolute inset-0 w-full h-full bg-background z-20 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
         <div className="h-1/2 z-30 flex flex-col items-center">
-        <Boxes />
-          <div className="text-6xl text-center text-primary z-30 group relative -mr-4" 
-          onMouseEnter={() => setHoveredIndex(1)}
-          onMouseLeave={() => setHoveredIndex(null)}>
+          <Boxes />
+          <div className="text-6xl text-center text-primary z-30 group relative -mr-4"
+            onMouseEnter={() => setHoveredIndex(1)}
+            onMouseLeave={() => setHoveredIndex(null)}>
             <AnimatePresence mode="popLayout">
-              { hoveredIndex === 1 && (
+              {hoveredIndex === 1 && (
                 <motion.div
                   initial={{ opacity: 0, y: 20, scale: 0.6 }}
                   animate={{
@@ -108,105 +105,113 @@ const stats = [
                 </motion.div>
               )}
             </AnimatePresence>
-            <div  onMouseMove={handleMouseMove} >
-            Tejas Savaliya
+            <div onMouseMove={handleMouseMove} >
+              Tejas Savaliya
             </div>
           </div>
           <div className="text-xl text-card-foreground z-30 mt-1">
-            MERN Stack Developer
+            Full Stack Developer
           </div>
           <div className="text-card-foreground text-md text-center w-full px-4 lg:px-0 lg:w-1/2 z-30 mt-4">
             🖥️ Full of energy and expertise in Mern stack web development! 🌟 Crafting innovative and user-friendly websites is my passion. Let&aposs collaborate and bring your ideas to life! 🌐💪
           </div>
-           <motion.div
-              className="flex flex-wrap justify-center gap-4 my-8  z-30"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.8 }}
-            >
+          <motion.div
+            className="flex flex-wrap justify-center gap-4 my-8  z-30"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.8 }}
+          >
+            <Link href="/showcase" >
               <Button size="lg" className="group">
-                {/* <Link href="/showcase"> */}
-                  <Rocket className="mr-2 h-5 w-5 group-hover:animate-bounce" />
-                  View Projects
-                {/* </Link> */}
+                <Rocket className="mr-2 h-5 w-5 group-hover:animate-bounce" />
+                View Projects
               </Button>
+            </Link>
+            <a href="https://drive.google.com/uc?export=download&id=1rb7hpekdg3BVlnU-XMFlUptlpKbBdaJQ" download="Tejas Savaliya Resume.pdf">
               <Button size="lg" variant="outline" className="group bg-transparent">
                 <Download className="mr-2 h-5 w-5 group-hover:animate-bounce" />
                 Download CV
               </Button>
-            </motion.div>
-           <motion.div
-              className="flex justify-center gap-4 mb-12 z-30"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.8 }}
-            >
+            </a>
+          </motion.div>
+          <motion.div
+            className="flex justify-center gap-4 mb-12 z-30"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.8 }}
+          >
+            <Link href="https://github.com/Tejas252" target="_blank">
               <Button size="icon" variant="ghost" className="hover:scale-110 transition-transform text-primary">
                 <Github className="h-5 w-5" />
               </Button>
+            </Link>
+            <Link href="https://www.linkedin.com/in/tejas-savaliya" target="_blank">
               <Button size="icon" variant="ghost" className="hover:scale-110 transition-transform text-primary">
                 <Linkedin className="h-5 w-5" />
               </Button>
+            </Link>
+            <Link href="mailto:savaliyatejas108@gmail.com" target="_blank">
               <Button size="icon" variant="ghost" className="hover:scale-110 transition-transform text-primary">
                 <Mail className="h-5 w-5" />
               </Button>
-            </motion.div>
-           
+            </Link>
+          </motion.div>
+
         </div>
         <FloatingChat />
 
       </div>
       <div>
         <div className="w-full overflow-hidden">
-           <BorderFrame>
+          <BorderFrame>
 
-        <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-            className="my-16 z-30"
-          >
-            <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center gap-2 text-primary/70">
-              <Code className="h-6 w-6" />
-              Tech Stack
-            </h2>
-            <div className="flex flex-wrap justify-center gap-3">
-              {skills.map((skill, index) => (
-                <motion.div
-                  key={skill}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1.4 + index * 0.1, duration: 0.5 }}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <Badge
-                    variant="secondary"
-                    className="text-sm py-2 px-4 hover:bg-primary hover:text-primary-foreground transition-colors"
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
+              className="my-16 z-30"
+            >
+              <h2 className="text-2xl font-semibold mb-6 flex items-center justify-center gap-2 text-primary/70">
+                <Code className="h-6 w-6" />
+                Tech Stack
+              </h2>
+              <div className="flex flex-wrap justify-center gap-3">
+                {skills.map((skill, index) => (
+                  <motion.div
+                    key={skill}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 1.4 + index * 0.1, duration: 0.5 }}
+                    whileHover={{ scale: 1.1 }}
                   >
-                    {skill}
-                  </Badge>
+                    <Badge
+                      variant="secondary"
+                      className="text-sm py-2 px-4 hover:bg-primary hover:text-primary-foreground transition-colors"
+                    >
+                      {skill}
+                    </Badge>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.6, duration: 0.8 }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-16 px-4 z-30"
+            >
+              {stats.map((stat, index) => (
+                <motion.div key={stat.label} whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
+                  <Card className="p-6 h-full text-center glass hover:shadow-lg transition-all duration-300">
+                    <BorderFrame>
+                      <div className="text-3xl font-bold text-primary mb-2">{stat.value}</div>
+                      <div className="text-sm text-muted-foreground">{stat.label}</div>
+                    </BorderFrame>
+                  </Card>
                 </motion.div>
               ))}
-            </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.6, duration: 0.8 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-16 px-4 z-30"
-          >
-            {stats.map((stat, index) => (
-              <motion.div key={stat.label} whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
-                <Card className="p-6 h-full text-center glass hover:shadow-lg transition-all duration-300">
-                  <BorderFrame>
-                  <div className="text-3xl font-bold text-primary mb-2">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                  </BorderFrame>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
-           </BorderFrame>
+            </motion.div>
+          </BorderFrame>
 
         </div>
       </div>

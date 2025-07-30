@@ -1,10 +1,12 @@
-import { embed, embedMany } from 'ai';
+import { embedMany, generateText } from 'ai';
 import { google } from "@ai-sdk/google"
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import pdfParse from 'pdf-parse/lib/pdf-parse'// Make sure to install: npm install pdf-parse
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { em } from 'framer-motion/client';
+import { CONTENT_DIVIDER_PROMPT } from '@/prompt/content_devider';
+import { smartChunkingForAIStructuring } from '@/lib/splitter';
+import { extractJsonFromText } from '@/lib/parser';
 
 
 export const GET = async (request: NextRequest) => {
@@ -55,6 +57,18 @@ export const POST = async (request: NextRequest) => {
         const data = await pdfParse(buffer);
         const extractedText = data.text;
 
+        const chunksForAI = smartChunkingForAIStructuring(extractedText);
+
+        // console.log("🚀 ~ POST ~ chunks:", chunks)
+
+        const result = await generateText({
+            model: google("models/gemini-2.0-flash-exp"),
+            system: CONTENT_DIVIDER_PROMPT,
+            prompt: `content: ${chunksForAI.join("\n\n")}`,
+        })
+
+       
+
         // ** Split the text
         const splitter = new RecursiveCharacterTextSplitter({
             chunkSize: 1000,
@@ -62,8 +76,9 @@ export const POST = async (request: NextRequest) => {
         });
 
         // ** Create a chunks from the extracted text
-        const chunks = await splitter.createDocuments([extractedText]);
+        const chunks = await splitter.createDocuments([extractJsonFromText(result.text)?.map((chunk: any) => `${chunk.section}: ${chunk.content}`)?.join("\n\n") || ""]);
 
+        console.log("🚀 ~ POST ~ result:", chunks)
         const  embeddings  = await embedMany({
             model: google.textEmbeddingModel('text-embedding-004'),
             values: chunks?.map((chunk) => chunk.pageContent as string),
@@ -71,10 +86,10 @@ export const POST = async (request: NextRequest) => {
 
         const db = await getDb();
         const collection = db.collection("TejasData");
-        const insertedData = await collection.insertMany(embeddings?.embeddings?.map((d,i) => ({ embedding: d,value:embeddings.values[i], createdAt: new Date() })) || []);
+        const insertedData = await collection.insertMany(embeddings?.embeddings?.map((d,i) => ({ embedding: d,value:embeddings.values[i],metadata:chunks[i].metadata, createdAt: new Date() })) || []);
 
 
-        return NextResponse.json(embeddings)
+        return NextResponse.json(insertedData)
 
     } catch (error) {
         console.log("🚀 ~ POST ~ error:", error)

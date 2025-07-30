@@ -4,88 +4,49 @@ import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Github, ExternalLink, Brain, Zap, Globe, Database } from "lucide-react"
+import { ExternalLink, Home, ChartBarBig, ForkKnife, FlaskRoundIcon, Cog } from "lucide-react"
 import { FloatingChat } from "@/components/floating-chat";
 
 const projects = [
   {
     id: 1,
-    title: "AI-Powered E-commerce Platform",
-    description:
-      "A full-stack e-commerce solution with AI-driven product recommendations, dynamic pricing, and intelligent inventory management.",
-    image: "/placeholder.svg?height=300&width=500",
-    technologies: ["Next.js", "TensorFlow", "PostgreSQL", "Stripe", "AWS"],
-    category: "AI/ML",
-    icon: Brain,
-    github: "#",
-    demo: "#",
+    title: "Designtrack",
+    description: "It is dadicated for furniture showroom management where we are offring many customisations with many custom modules. with the help of the designtrack showroom can track whole billings with the famous software quickbook and designtrack gives the all types of the report to track the all over sales trend and commissions management for the showroom, manifacturers & sales persons",
+    image: "https://www.designtrack.co/images/logos/Logo.svg",
+    technologies: ["Next.js", "Node.js", "MongoDb", "Graphql", "s3", "Cognito", "Quickbook"],
+    category: "Full stack CRM",
+    icon: ChartBarBig,
+    github: "https://showroomsoftware.com/design-track",
+    demo: "https://designtrack.co",
     featured: true,
   },
   {
     id: 2,
-    title: "Real-time Chat Application",
+    title: "LOKO",
     description:
-      "Scalable chat application with WebSocket connections, message encryption, and AI-powered content moderation.",
-    image: "/placeholder.svg?height=300&width=500",
-    technologies: ["React", "Node.js", "Socket.io", "MongoDB", "Redis"],
+      "LOKO is a online food order platform where user orders the food on partnered restaurants and LOKO’s delivery partner will pickup & drop the order to customer",
+    image: "https://www.loko.services/union.svg",
+    technologies: ["Next.js", "Node.js", "MongoDb", "Typesense", "s3", "Firebase Realtime Database", "Graphql", "Shadcn UI", "Tailwind CSS", "Stripe"],
     category: "Web App",
-    icon: Zap,
-    github: "#",
-    demo: "#",
+    icon: ForkKnife,
+    github: "https://www.loko.services",
+    demo: "https://dev.loko.services",
     featured: false,
   },
   {
     id: 3,
-    title: "Smart Analytics Dashboard",
+    title: "OSSPhere",
     description:
-      "Business intelligence dashboard with predictive analytics, real-time data visualization, and automated reporting.",
-    image: "/placeholder.svg?height=300&width=500",
-    technologies: ["Vue.js", "Python", "FastAPI", "D3.js", "Docker"],
-    category: "Analytics",
-    icon: Database,
-    github: "#",
-    demo: "#",
-    featured: true,
-  },
-  {
-    id: 4,
-    title: "AI Content Generator",
-    description:
-      "Content creation platform using GPT models for generating blog posts, social media content, and marketing copy.",
-    image: "/placeholder.svg?height=300&width=500",
-    technologies: ["React", "OpenAI API", "Node.js", "Prisma", "Vercel"],
-    category: "AI/ML",
-    icon: Brain,
+      "Currently building MVP where i am leading the team and making batter day by day with extra pace of AI",
+    image: "https://www.shutterstock.com/image-vector/development-260nw-358169897.jpg",
+    technologies: ["Next.js", "Graphql", "Langchain", "OpenAI", "Typesense", "Sequin", "PostgreSQL", "Shadcn UI", "Tailwind CSS", "Framer Motion", "Docker", "NextAuth"],
+    category: "Web App",
+    icon: FlaskRoundIcon,
     github: "#",
     demo: "#",
     featured: false,
   },
-  {
-    id: 5,
-    title: "Blockchain Voting System",
-    description:
-      "Secure and transparent voting platform built on blockchain technology with smart contracts and decentralized storage.",
-    image: "/placeholder.svg?height=300&width=500",
-    technologies: ["Solidity", "Web3.js", "React", "IPFS", "Ethereum"],
-    category: "Blockchain",
-    icon: Globe,
-    github: "#",
-    demo: "#",
-    featured: true,
-  },
-  {
-    id: 6,
-    title: "IoT Monitoring Dashboard",
-    description:
-      "Real-time monitoring system for IoT devices with data visualization, alerts, and predictive maintenance features.",
-    image: "/placeholder.svg?height=300&width=500",
-    technologies: ["Angular", "Node.js", "InfluxDB", "MQTT", "Grafana"],
-    category: "IoT",
-    icon: Zap,
-    github: "#",
-    demo: "#",
-    featured: false,
-  },
+
 ]
 
 const categories = ["All", "AI/ML", "Web App", "Analytics", "Blockchain", "IoT"]
@@ -105,14 +66,14 @@ export default function ShowcasePage() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-6xl font-bold mb-6 hover:text-primary">Project Showcase</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          {/* <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Explore my portfolio of innovative projects spanning AI/ML, web development, blockchain, and IoT solutions.
             Each project represents a unique challenge solved with cutting-edge technology.
-          </p>
+          </p> */}
         </motion.div>
 
         {/* Category Filter */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8 }}
@@ -134,7 +95,7 @@ export default function ShowcasePage() {
               </Badge>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -152,11 +113,11 @@ export default function ShowcasePage() {
                   <img
                     src={project.image || "/placeholder.svg"}
                     alt={project.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-48 p-3 object-contain group-hover:scale-110 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute top-4 right-4">
-                    <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm">
+                    <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm text-xs text-primary">
                       {project.category}
                     </Badge>
                   </div>
@@ -185,14 +146,18 @@ export default function ShowcasePage() {
                   </div>
 
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline" className="flex-1 group/btn bg-transparent">
-                      <Github className="mr-2 h-4 w-4 group-hover/btn:animate-spin" />
-                      Code
-                    </Button>
-                    <Button size="sm" className="flex-1 group/btn">
-                      <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:animate-bounce" />
-                      Demo
-                    </Button>
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex-1 group/btn w-full">
+                      <Button size="sm" variant="outline" className="flex-1 group/btn bg-transparent w-full">
+                        <Home className="mr-2 h-4 w-4 group-hover/btn:animate-spin" />
+                        Home
+                      </Button>
+                    </a>
+                    <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex-1 group/btn w-full">
+                      <Button size="sm" className="flex-1 group/btn w-full">
+                        <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:animate-bounce" />
+                        Demo
+                      </Button>
+                    </a>
                   </div>
                 </CardContent>
               </Card>
@@ -208,13 +173,13 @@ export default function ShowcasePage() {
           className="text-center mt-12"
         >
           <Button size="lg" variant="outline" className="group bg-transparent">
-            Load More Projects
+            Building More Projects
             <motion.div
               className="ml-2"
               animate={{ rotate: 360 }}
               transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
             >
-              <Zap className="h-4 w-4" />
+              <Cog className="h-4 w-4" />
             </motion.div>
           </Button>
         </motion.div>
