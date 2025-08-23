@@ -111,7 +111,7 @@ export const GET = async (request: NextRequest) => {
       // prompt: fullPrompt,
       messages: conversationHistory,
       tools: canUseContextTool ? { getContext: getContextTool } : undefined,
-      maxSteps: 3, // Limit the number of tool calls
+      maxRetries: 3,
       onStepFinish: (step) => {
         // Track tool usage
         if (step.toolCalls && step.toolCalls.length > 0) {
