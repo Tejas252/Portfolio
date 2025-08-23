@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { MessageCircle, Send, X, Bot, User, GlobeIcon, MicIcon, PlusIcon } from "lucide-react"
+import { MessageCircle, Send, X, Bot, User, GlobeIcon, MicIcon, PlusIcon, HammerIcon } from "lucide-react"
 import BorderFrame from "./border-frame"
 import ReactMarkdown from 'react-markdown'
 import {
@@ -24,6 +24,7 @@ import {
   AIInputToolbar,
   AIInputTools,
 } from '@/components/ui/kibo-ui/ai/input';
+import { Badge } from "./ui/badge"
 
 interface Message {
   id: string
@@ -78,43 +79,43 @@ export function FloatingChat({ hideInput = false }: FloatingChatProps) {
   }, [messages])
 
   // Load chat history when component mounts
-  useEffect(() => {
-    loadChatHistory()
-  }, [])
+  // useEffect(() => {
+  //   loadChatHistory()
+  // }, [])
 
-  const loadChatHistory = async () => {
-    if (isLoadingHistory) return
+  // const loadChatHistory = async () => {
+  //   if (isLoadingHistory) return
     
-    setIsLoadingHistory(true)
-    try {
-      // First, try to get an existing session or create a new one
-      const response = await fetch('/api/ai', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: 'Hello', // Initial greeting to establish session
-          sessionId: sessionId
-        })
-      })
+  //   setIsLoadingHistory(true)
+  //   try {
+  //     // First, try to get an existing session or create a new one
+  //     const response = await fetch('/api/ai', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         query: 'Hello', // Initial greeting to establish session
+  //         sessionId: sessionId
+  //       })
+  //     })
 
-      if (response.ok) {
-        const newSessionId = response.headers.get('X-Session-Id')
-        if (newSessionId && newSessionId !== sessionId) {
-          setSessionId(newSessionId)
+  //     if (response.ok) {
+  //       const newSessionId = response.headers.get('X-Session-Id')
+  //       if (newSessionId && newSessionId !== sessionId) {
+  //         setSessionId(newSessionId)
           
-          // Try to load existing conversation history for this session
-          // Note: In a real implementation, you might have a separate endpoint for this
-          // For now, we'll start with an empty conversation
-        }
-      }
-    } catch (error) {
-      console.error('Error loading chat history:', error)
-    } finally {
-      setIsLoadingHistory(false)
-    }
-  }
+  //         // Try to load existing conversation history for this session
+  //         // Note: In a real implementation, you might have a separate endpoint for this
+  //         // For now, we'll start with an empty conversation
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error loading chat history:', error)
+  //   } finally {
+  //     setIsLoadingHistory(false)
+  //   }
+  // }
 
   useEffect(() => {
     if (hideInput) return
@@ -220,8 +221,6 @@ export function FloatingChat({ hideInput = false }: FloatingChatProps) {
           )
         );
       }
-
-      console.log("🚀 ~ handleSendMessage ~ assistantContent:", assistantContent);
       
     } catch (error) {
       console.error("Error sending message:", error)
@@ -369,7 +368,7 @@ export function FloatingChat({ hideInput = false }: FloatingChatProps) {
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Bot className="h-5 w-5 text-primary" />
-                  AI Assistant
+                  AI Assistant <Badge variant="outline">Beta</Badge>
                 </CardTitle>
                 <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)} className="h-8 w-8">
                   <X className="h-4 w-4" />

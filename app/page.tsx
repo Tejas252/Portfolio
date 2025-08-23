@@ -20,7 +20,6 @@ import { useState } from "react";
 export default function Home() {
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  console.log("🚀 ~ Home ~ hoveredIndex:", hoveredIndex)
   const springConfig = { stiffness: 100, damping: 5 };
   const x = useMotionValue(0); // going to set this value on mouse move
   // rotate the tooltip
@@ -37,7 +36,6 @@ export default function Home() {
   // @ts-expect-error
   // event has no implicit types
   const handleMouseMove = (event) => {
-    // console.log("🚀 ~ handleMouseMove ~ event:", event)
     const halfWidth = event.target.offsetWidth / 2;
     x.set(event.nativeEvent.offsetX - halfWidth); // set the x value, which is then used in transform and rotate
   };

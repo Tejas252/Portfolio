@@ -1,24 +1,37 @@
-import { tool } from "ai";
+import { tool, ToolExecuteFunction } from "ai";
 import { z } from "zod";
 import { embed, cosineSimilarity } from "ai";
 import { google } from "@ai-sdk/google";
 import { getDb } from "./mongodb";
+import { getEmbeddingModel } from "./models/getEmbbedingModel";
 
 // Tool for getting context about the user from database
 export const getContextTool = tool({
   description: "Search for relevant context and information about Tejas from the database. Use this when you need specific details about his projects, skills, experience, or background that aren't in the current conversation.",
-  parameters: z.object({
+  inputSchema: z.object({
     query: z.string().describe("The search query to find relevant context about Tejas"),
     maxResults: z.number().optional().default(3).describe("Maximum number of context results to return (1-5)")
   }),
-  execute: async ({ query, maxResults = 3 }) => {
+  type: "function",
+    execute: async ({ query, maxResults }) => {
+
+    // const { query, maxResults } = params;
+
+     if (!query) {
+        return {
+          success: true,
+          message: "No relevant context found for the query. say to contact me on LinkedIn.",
+          results: ["No relevant context found for the query. say to contact me on LinkedIn.",]
+        };
+      }
+
     try {
       // Limit maxResults to prevent excessive data
       const limitedResults = Math.min(Math.max(maxResults, 1), 5);
       
       // Generate embedding for the query
       const queryEmbedding = await embed({
-        model: google.textEmbeddingModel('text-embedding-004'),
+        model: getEmbeddingModel(),
         value: query,
       });
 
@@ -45,9 +58,9 @@ export const getContextTool = tool({
 
       if (!searchResults || searchResults.length === 0) {
         return {
-          success: false,
-          message: "No relevant context found for the query.",
-          results: []
+          success: true,
+          message: "No relevant context found for the query. say to contact me on LinkedIn.",
+          results: ["No relevant context found for the query. say to contact me on LinkedIn.",]
         };
       }
 

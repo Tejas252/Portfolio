@@ -8,6 +8,8 @@ import { chatHistoryManager } from "@/lib/chatHistory";
 import { IChatMessage } from "@/models/ChatSession";
 import { getContextTool, toolUsageTracker } from "@/lib/tools";
 import { v4 as uuidv4 } from "uuid";
+import { getLanguageModel } from "@/lib/models/getLanguageModel";
+import { getEmbeddingModel } from "@/lib/models/getEmbbedingModel";
 
 // Request interface
 interface ChatRequest {
@@ -83,11 +85,10 @@ export const GET = async (request: NextRequest) => {
     conversationHistory = await chatHistoryManager.getConversationHistory(currentSessionId, 10);
 
     const queryEmbedding = await embed({
-      model: google.textEmbeddingModel('text-embedding-004'),
+      model: getEmbeddingModel(),
       value: query,
     });
 
-    // console.log(conversationHistory ,queryEmbedding?.embedding);
 
     const nearestContext = context
       ?.map((c: any) => {
@@ -105,7 +106,7 @@ export const GET = async (request: NextRequest) => {
     const canUseContextTool = toolUsageTracker.canUseTool(currentSessionId, 'getContext');
     
     const result = streamText({
-      model: google("models/gemini-2.0-flash-exp"),
+      model: getLanguageModel(),
       system: SYSTEM_PROMPT,
       // prompt: fullPrompt,
       messages: conversationHistory,
@@ -247,10 +248,8 @@ export const POST = async (request: NextRequest) => {
 
     dbConversationHistory = await chatHistoryManager.getConversationHistory(currentSessionId, 10);
 
-    console.log(dbConversationHistory);
-
     const queryEmbedding = await embed({
-      model: google.textEmbeddingModel('text-embedding-004'),
+      model: getEmbeddingModel(),
       value: query,
     });
 
@@ -269,24 +268,25 @@ export const POST = async (request: NextRequest) => {
     // Check if tools can be used (prevent infinite loops)
     const canUseContextTool = toolUsageTracker.canUseTool(currentSessionId, 'getContext');
 
-    const result = streamText({
-      model: google("models/gemini-2.0-flash-exp"),
-      system: SYSTEM_PROMPT,
-      // prompt: fullPrompt,
-      messages: dbConversationHistory,
-      tools: canUseContextTool ? { getContext: getContextTool } : undefined,
-      maxSteps: 3, // Limit the number of tool calls
-      onStepFinish: (step) => {
-        // Track tool usage
-        if (step.toolCalls && step.toolCalls.length > 0) {
-          step.toolCalls.forEach(toolCall => {
-            if (toolCall.toolName === 'getContext') {
-              toolUsageTracker.recordUsage(currentSessionId, 'getContext');
-            }
-          });
+   const result = streamText({
+  model: getLanguageModel(),
+  system: SYSTEM_PROMPT, // keep only rules
+  messages: [
+    ...dbConversationHistory,
+    { role: "assistant", content: `Relevant context:\n${nearestContext}` },
+  ],
+  tools: canUseContextTool ? { getContext: getContextTool } : undefined,
+  onStepFinish: (step) => {
+    if (step.toolCalls && step.toolCalls.length > 0) {
+      step.toolCalls.forEach(toolCall => {
+        if (toolCall.toolName === 'getContext') {
+          toolUsageTracker.recordUsage(currentSessionId, 'getContext');
         }
-      },
-    });
+      });
+    }
+  },
+maxRetries: 3,
+});
 
     // Store assistant response
     let assistantResponse = "";

@@ -7,6 +7,8 @@ import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { CONTENT_DIVIDER_PROMPT } from '@/prompt/content_devider';
 import { smartChunkingForAIStructuring } from '@/lib/splitter';
 import { extractJsonFromText } from '@/lib/parser';
+import { getEmbeddingModel } from '@/lib/models/getEmbbedingModel';
+import { getLanguageModel } from '@/lib/models/getLanguageModel';
 
 
 export const GET = async (request: NextRequest) => {
@@ -16,16 +18,19 @@ export const GET = async (request: NextRequest) => {
         "Tejas Savaliya worekd on three project \n 1: Designtrack - CRM for showrooms management specially for furniture showrooms \n 2: Daring APP Backend - here he created backaend for a dating app, used tech socket.io \n 3: LOKO- Taxi hailing platform & Food delivery like zomato there are customer can order the food and LOKO delivery partner pick up & drop that food at customer address"]
 
     const { embeddings } = await embedMany({
-        model: google.textEmbeddingModel('text-embedding-004'),
+        model: getEmbeddingModel(),
         values: text,
+        providerOptions: {
+    google: {
+      outputDimensionality: 512, // optional, number of dimensions for the embedding
+      taskType: 'SEMANTIC_SIMILARITY', // optional, specifies the task type for generating embeddings
+    },
+  },
     });
 
-    console.log("🚀 ~ GET ~ embedding:", embeddings)
     const db = await getDb();
     const collection = db.collection("TejasData");
-    console.log("🚀 ~ GET ~ collection:", collection)
     const data = await collection.insertMany(embeddings?.map((d) => ({ ...d, createdAt: new Date() })) || []);
-    console.log("🚀 ~ GET ~ data:", data)
 
 
 
@@ -59,10 +64,9 @@ export const POST = async (request: NextRequest) => {
 
         const chunksForAI = smartChunkingForAIStructuring(extractedText);
 
-        // console.log("🚀 ~ POST ~ chunks:", chunks)
 
         const result = await generateText({
-            model: google("models/gemini-2.0-flash-exp"),
+            model: getLanguageModel(),
             system: CONTENT_DIVIDER_PROMPT,
             prompt: `content: ${chunksForAI.join("\n\n")}`,
         })
@@ -78,9 +82,8 @@ export const POST = async (request: NextRequest) => {
         // ** Create a chunks from the extracted text
         const chunks = await splitter.createDocuments([extractJsonFromText(result.text)?.map((chunk: any) => `${chunk.section}: ${chunk.content}`)?.join("\n\n") || ""]);
 
-        console.log("🚀 ~ POST ~ result:", chunks)
         const  embeddings  = await embedMany({
-            model: google.textEmbeddingModel('text-embedding-004'),
+            model: getEmbeddingModel(),
             values: chunks?.map((chunk) => chunk.pageContent as string),
         });
 
