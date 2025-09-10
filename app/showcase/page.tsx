@@ -9,6 +9,18 @@ import { FloatingChat } from "@/components/floating-chat";
 
 const projects = [
   {
+    id: 4,
+    title: "Chartix",
+    description: "Transform Your Data into Beautiful Insights \n Upload your CSV or Excel files and let AI generate stunning visualizations in seconds. No coding required",
+    image: "/logo.png",
+    technologies: ["Next.js", "Node.js", "MongoDb", "Graphql", "s3", "Cognito", "Quickbook"],
+    category: "Full stack CRM",
+    icon: ChartBarBig,
+    github: "https://github.com/Tejas252/chartix",
+    demo: "https://chartix.vercel.app",
+    featured: true,
+  },
+  {
     id: 1,
     title: "Designtrack",
     description: "It is dadicated for furniture showroom management where we are offring many customisations with many custom modules. with the help of the designtrack showroom can track whole billings with the famous software quickbook and designtrack gives the all types of the report to track the all over sales trend and commissions management for the showroom, manifacturers & sales persons",
