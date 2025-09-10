@@ -167,7 +167,7 @@ export default function ShowcasePage() {
                   </div>
 
                   <div className="flex gap-2">
-                    <Link href={project?.home || project?.demo as string} target="_blank" rel="noopener noreferrer" className="flex-1 group/btn w-full">
+                    <Link href={project?.home || project?.github as string} target="_blank" rel="noopener noreferrer" className="flex-1 group/btn w-full">
                       <Button size="sm" variant="outline" className="flex-1 group/btn bg-transparent w-full">
                         {project?.home ? 
                         <>
