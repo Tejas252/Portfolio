@@ -4,21 +4,23 @@ import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Home, ChartBarBig, ForkKnife, FlaskRoundIcon, Cog } from "lucide-react"
+import { ExternalLink, Home, ChartBarBig, ForkKnife, FlaskRoundIcon, Cog, Github } from "lucide-react"
 import { FloatingChat } from "@/components/floating-chat";
+import Link from "next/link"
 
 const projects = [
   {
     id: 4,
     title: "Chartix",
     description: "Transform Your Data into Beautiful Insights \n Upload your CSV or Excel files and let AI generate stunning visualizations in seconds. No coding required",
-    image: "/logo.png",
-    technologies: ["Next.js", "Node.js", "MongoDb", "Graphql", "s3", "Cognito", "Quickbook"],
-    category: "Full stack CRM",
+    image: "/chartix.png",
+    technologies: ["Next.js", "PostgesQL", "AI SDK", "Supabase", "Vercel AI Gateway"],
+    category: "AI based chart generator",
     icon: ChartBarBig,
     github: "https://github.com/Tejas252/chartix",
     demo: "https://chartix.vercel.app",
-    featured: true,
+    featured: false,
+    hobby: true
   },
   {
     id: 1,
@@ -28,7 +30,7 @@ const projects = [
     technologies: ["Next.js", "Node.js", "MongoDb", "Graphql", "s3", "Cognito", "Quickbook"],
     category: "Full stack CRM",
     icon: ChartBarBig,
-    github: "https://showroomsoftware.com/design-track",
+    home: "https://showroomsoftware.com/design-track",
     demo: "https://designtrack.co",
     featured: true,
   },
@@ -41,7 +43,7 @@ const projects = [
     technologies: ["Next.js", "Node.js", "MongoDb", "Typesense", "s3", "Firebase Realtime Database", "Graphql", "Shadcn UI", "Tailwind CSS", "Stripe"],
     category: "Web App",
     icon: ForkKnife,
-    github: "https://www.loko.services",
+    home: "https://www.loko.services",
     demo: "https://dev.loko.services",
     featured: false,
   },
@@ -51,10 +53,10 @@ const projects = [
     description:
       "Currently building MVP where i am leading the team and making batter day by day with extra pace of AI",
     image: "https://www.shutterstock.com/image-vector/development-260nw-358169897.jpg",
-    technologies: ["Next.js", "Graphql", "Langchain", "OpenAI", "Typesense", "Sequin", "PostgreSQL", "Shadcn UI", "Tailwind CSS", "Framer Motion", "Docker", "NextAuth"],
+    technologies: ["Next.js", "Graphql", "AI SDK", "OpenAI", "Typesense", "Sequin", "PostgreSQL", "Shadcn UI", "Tailwind CSS", "Framer Motion", "Docker", "NextAuth"],
     category: "Web App",
     icon: FlaskRoundIcon,
-    github: "#",
+    home: "#",
     demo: "#",
     featured: false,
   },
@@ -121,27 +123,34 @@ export default function ShowcasePage() {
               className={project.featured ? "md:col-span-2 lg:col-span-1" : ""}
             >
               <Card className="h-full overflow-hidden group hover:shadow-2xl transition-all duration-300 glass">
-                <div className="relative overflow-hidden">
-                  <img
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    className="w-full h-48 p-3 object-contain group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute top-4 right-4">
-                    <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm text-xs text-primary">
-                      {project.category}
-                    </Badge>
-                  </div>
-                  <div className="absolute top-4 left-4">
-                    <project.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  {project.featured && (
-                    <div className="absolute bottom-4 left-4">
-                      <Badge className="bg-primary/90 backdrop-blur-sm">Featured</Badge>
+                <Link href={project.demo} target="_blank">
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      className="w-full h-48 p-3 object-contain group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute top-4 right-4">
+                      <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm text-xs text-primary">
+                        {project.category}
+                      </Badge>
                     </div>
-                  )}
-                </div>
+                    <div className="absolute top-4 left-4">
+                      <project.icon className="h-6 w-6 text-primary" />
+                    </div>
+                    {project.featured && (
+                      <div className="absolute bottom-4 left-4">
+                        <Badge className="bg-primary/90 backdrop-blur-sm">Featured</Badge>
+                      </div>
+                    )}
+                    {project.hobby && (
+                      <div className="absolute bottom-4 right-4">
+                        <Badge className="bg-primary/90 backdrop-blur-sm">Owner</Badge>
+                      </div>
+                    )}
+                  </div>
+                </Link>
 
                 <CardHeader>
                   <CardTitle className="group-hover:text-primary transition-colors">{project.title}</CardTitle>
@@ -158,12 +167,21 @@ export default function ShowcasePage() {
                   </div>
 
                   <div className="flex gap-2">
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex-1 group/btn w-full">
+                    <Link href={project?.home || project?.demo as string} target="_blank" rel="noopener noreferrer" className="flex-1 group/btn w-full">
                       <Button size="sm" variant="outline" className="flex-1 group/btn bg-transparent w-full">
-                        <Home className="mr-2 h-4 w-4 group-hover/btn:animate-spin" />
+                        {project?.home ? 
+                        <>
+                        <Home className="mr-2 h-4 w-4 group-hover/btn:animate-spin" /> 
                         Home
+                        </>
+                        : 
+                        <>
+                        <Github className="mr-2 h-4 w-4 group-hover/btn:animate-spin" />
+                        Repo
+                        </>}
+                        
                       </Button>
-                    </a>
+                    </Link>
                     <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex-1 group/btn w-full">
                       <Button size="sm" className="flex-1 group/btn w-full">
                         <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:animate-bounce" />

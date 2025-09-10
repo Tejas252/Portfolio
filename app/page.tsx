@@ -111,7 +111,7 @@ export default function Home() {
             Full Stack Developer
           </div>
           <div className="text-card-foreground text-md text-center w-full px-4 lg:px-0 lg:w-1/2 z-30 mt-4">
-            🖥️ Full of energy and expertise in Mern stack web development! 🌟 Crafting innovative and user-friendly websites is my passion. Let&aposs collaborate and bring your ideas to life! 🌐💪
+            🖥️ Full Stack Developer exploring and building AI-powered projects 🤖 | Passionate about crafting innovative, scalable, and user-friendly applications 🌐 | Always learning, experimenting, and pushing ideas into reality 🚀
           </div>
           <motion.div
             className="flex flex-wrap justify-center gap-4 my-8  z-30"
