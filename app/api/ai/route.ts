@@ -290,44 +290,46 @@ maxRetries: 3,
 
     // Store assistant response
     let assistantResponse = "";
-    const readableStream = new ReadableStream({
-      async pull(controller) {
-        try {
-          for await (const chunk of result.textStream) {
-            assistantResponse += chunk;
-            controller.enqueue(chunk);
-          }
+    // const readableStream = new ReadableStream({
+    //   async pull(controller) {
+    //     try {
+    //       for await (const chunk of result.textStream) {
+    //         assistantResponse += chunk;
+    //         controller.enqueue(chunk);
+    //       }
           
-          // Save assistant message to history
-          const assistantMessage = {
-            role: "assistant" as const,
-            content: assistantResponse
-          };
-          console.log(assistantMessage);
-          if(assistantResponse){
-            await chatHistoryManager.addMessage(currentSessionId!, assistantMessage);
-          }else{
-            await chatHistoryManager.addMessage(currentSessionId!, {role: "assistant", content: "Sorry, I'm having trouble responding right now. Please contact to savaliyatejas108@gmail.com"});
-            controller.error("No response");
-          }
+    //       // Save assistant message to history
+    //       const assistantMessage = {
+    //         role: "assistant" as const,
+    //         content: assistantResponse
+    //       };
+    //       console.log(assistantMessage);
+    //       if(assistantResponse){
+    //         await chatHistoryManager.addMessage(currentSessionId!, assistantMessage);
+    //       }else{
+    //         await chatHistoryManager.addMessage(currentSessionId!, {role: "assistant", content: "Sorry, I'm having trouble responding right now. Please contact to savaliyatejas108@gmail.com"});
+    //         controller.error("No response");
+    //       }
           
-          controller.close();
-        } catch (error) {
-          // console.error("Stream error:", error);
-          controller.error(error);
-        }
-      },
-    });
+    //       controller.close();
+    //     } catch (error) {
+    //       // console.error("Stream error:", error);
+    //       controller.error(error);
+    //     }
+    //   },
+    // });
 
-    return new Response(readableStream, {
-      headers: {
-        "Content-Type": "text/event-stream",
-        "X-Session-Id": currentSessionId,
-        "X-RateLimit-Limit": limit.toString(),
-        "X-RateLimit-Remaining": remaining.toString(),
-        "X-RateLimit-Reset": new Date(reset).toISOString(),
-      },
-    });
+    // return new Response(readableStream, {
+    //   headers: {
+    //     "Content-Type": "text/event-stream",
+    //     "X-Session-Id": currentSessionId,
+    //     "X-RateLimit-Limit": limit.toString(),
+    //     "X-RateLimit-Remaining": remaining.toString(),
+    //     "X-RateLimit-Reset": new Date(reset).toISOString(),
+    //   },
+    // });
+
+    return result.toUIMessageStreamResponse() 
 
   } catch (error) {
     // console.error("AI API Error:", error);

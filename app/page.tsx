@@ -1,4 +1,5 @@
 "use client";
+import { AIFloatingChat } from "@/components/ai-floating-chat";
 import BorderFrame from "@/components/border-frame";
 import { FloatingChat } from "@/components/floating-chat";
 import { Boxes } from "@/components/ui/background-boxes";
@@ -156,7 +157,7 @@ export default function Home() {
           </motion.div>
 
         </div>
-        <FloatingChat />
+        <AIFloatingChat />
 
       </div>
       <div>

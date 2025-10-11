@@ -14,6 +14,7 @@ export const getContextTool = tool({
   }),
   type: "function",
     execute: async ({ query, maxResults }) => {
+    console.log("🚀 ~ query:", query)
 
     // const { query, maxResults } = params;
 
