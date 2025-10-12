@@ -28,7 +28,7 @@ CRITICAL INSTRUCTIONS:
         tools: { getContext: getContextTool },
         // Use auto tool choice to let the AI decide when to use tools
         toolChoice: 'auto',
-        stopWhen: stepCountIs(3), // Allow multiple steps to ensure completion
+        stopWhen: stepCountIs(5), // Allow multiple steps to ensure completion
         onStepFinish: (step) => {
             console.log('Step finished:', step);
             if (step.toolCalls) {

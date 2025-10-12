@@ -329,7 +329,7 @@ export function AIFloatingChat({ hideInput = false }: FloatingChatProps) {
                                     </Conversation>
                                 {/* </ScrollArea> */}
                                 <div className="p-4 border-t">
-                                    <PromptInput globalDrop multiple onSubmit={(message) => { message?.text?.trim() && sendMessage({ text: message.text as string }) }} className="w-full flex items-center">
+                                    <PromptInput globalDrop multiple onSubmit={handleSendMessage} className="w-full flex items-center">
                                         <PromptInputBody className="w-full max-h-[100px] overflow-auto">
                                             <PromptInputTextarea
                                                 onChange={(e) => setText(e.target.value)}
