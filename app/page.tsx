@@ -43,9 +43,9 @@ export default function Home() {
 
   const skills = [
     "Next.js",
+    "Node.js",
     "React",
     "TypeScript",
-    "Node.js",
     "Docker",
     "GraphQL",
     "MongoDB",
