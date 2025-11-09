@@ -17,7 +17,7 @@ const projects = [
     "image": "/chartix.jpg",
     "technologies": ["Next.js", "PostgreSQL", "AI SDK", "Supabase", "Vercel AI Gateway"],
     "category": "XLSX + Prompt = Visualization",
-    "icon": "ChartBarBig",
+    "icon": ChartBarBig,
     "github": "https://github.com/Tejas252/chartix-new",
     "demo": "https://chartix.vercel.app",
     "featured": false,
@@ -31,7 +31,7 @@ const projects = [
     "image": "https://ossphere-six.vercel.app/api/og/home",
     "technologies": ["Next.js", "GraphQL", "AI SDK", "OpenAI", "Typesense", "PostgreSQL", "Docker", "NextAuth"],
     "category": "AI-Powered Platform",
-    "icon": "FlaskRoundIcon",
+    "icon": FlaskRoundIcon,
     "home": "https://ossphere.dev",
     "demo": "#",
     "featured": false,
@@ -41,10 +41,10 @@ const projects = [
     "id": 5,
     "title": "Browser Automation System",
     "description": "Automated browser workflows to handle authentication with HITL for OTP, download bills from secure platforms, and process them via third-party APIs. Built from research to production readiness.",
-    "image": "/browser-automation.jpg",
+    "image": "",
     "technologies": ["Playwright", "Next.js", "Node.js", "Express.js", "MongoDB", "Mongoose"],
     "category": "Automation & AI Integration",
-    "icon": "Cog",
+    "icon": Cog,
     "github": "#",
     "demo": "#",
     "featured": false,
@@ -57,7 +57,7 @@ const projects = [
     "image": "https://www.designtrack.co/images/logos/Logo.svg",
     "technologies": ["Next.js", "Node.js", "MongoDB", "GraphQL", "S3", "Cognito", "QuickBooks"],
     "category": "Full Stack CRM",
-    "icon": "ChartBarBig",
+    "icon": ChartBarBig,
     "home": "https://showroomsoftware.com/design-track",
     "demo": "https://designtrack.co",
     "featured": true,
@@ -70,7 +70,7 @@ const projects = [
     "image": "/loko.svg",
     "technologies": ["Next.js", "Node.js", "MongoDB", "Typesense", "S3", "Firebase", "GraphQL", "Stripe"],
     "category": "Food Delivery Platform",
-    "icon": "ForkKnife",
+    "icon": ForkKnife,
     "home": "http://145.223.18.19:3000",
     "demo": "http://145.223.18.19:3000",
     "featured": false,
@@ -78,6 +78,21 @@ const projects = [
   },
 ]
 
+// Helper function to generate short form of project name
+function getShortForm(title: string): string {
+  const words = title.trim().split(/\s+/);
+  if (words.length > 1) {
+    // Multiple words: take first letter of each word
+    return words.map(word => word[0]?.toUpperCase() || '').join('');
+  } else {
+    // Single word: if 4 chars or less, use as-is, otherwise use first 2 chars
+    const trimmed = title.trim();
+    if (trimmed.length <= 4) {
+      return trimmed.toUpperCase();
+    }
+    return trimmed.substring(0, 2).toUpperCase();
+  }
+}
 
 export default function ShowcasePage() {
   return (
@@ -158,11 +173,19 @@ export default function ShowcasePage() {
                       >
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/8 to-accent/6 dark:from-primary/5 dark:to-accent/5" />
                         <div className="relative h-48 sm:h-56 flex items-center justify-center p-4 sm:p-6">
-                          <img
-                            src={project.image || "/placeholder.svg"}
-                            alt={project.title}
-                            className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-lg"
-                          />
+                          {project.image ? (
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-lg"
+                            />
+                          ) : (
+                            <div className="flex items-center justify-center w-full h-full">
+                              <span className="text-4xl sm:text-5xl font-bold text-primary/70 dark:text-primary/60">
+                                {getShortForm(project.title)}
+                              </span>
+                            </div>
+                          )}
                         </div>
                         
                         {/* Badges - Mobile */}
@@ -265,11 +288,19 @@ export default function ShowcasePage() {
                       >
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/8 to-accent/6 dark:from-primary/5 dark:to-accent/5" />
                         <div className="relative h-80 xl:h-96 flex items-center justify-center p-8">
-                          <img
-                            src={project.image || "/placeholder.svg"}
-                            alt={project.title}
-                            className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-xl"
-                          />
+                          {project.image ? (
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-xl"
+                            />
+                          ) : (
+                            <div className="flex items-center justify-center w-full h-full">
+                              <span className="text-6xl xl:text-7xl font-bold text-primary/70 dark:text-primary/60">
+                                {getShortForm(project.title)}
+                              </span>
+                            </div>
+                          )}
                         </div>
                         
                         {/* Badges - Desktop */}
