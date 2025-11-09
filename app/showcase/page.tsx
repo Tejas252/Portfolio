@@ -33,7 +33,7 @@ const projects = [
     "category": "AI-Powered Platform",
     "icon": FlaskRoundIcon,
     "home": "https://ossphere.dev",
-    "demo": "#",
+    "demo": "https://ossphere.dev",
     "featured": false,
     "gradient": "from-violet-500/20 to-purple-500/20"
   },
