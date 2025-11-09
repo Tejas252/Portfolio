@@ -126,7 +126,7 @@ export default function Home() {
                 View Projects
               </Button>
             </Link>
-            <a href="https://drive.google.com/uc?export=download&id=1rb7hpekdg3BVlnU-XMFlUptlpKbBdaJQ" download="Tejas Savaliya Resume.pdf">
+            <a href="https://drive.google.com/uc?export=download&id=1H0KEs4e4F1r4mJURtQMUAXBxEsFFTdf9" download="Tejas Savaliya Resume.pdf">
               <Button size="lg" variant="outline" className="group bg-transparent">
                 <Download className="mr-2 h-5 w-5 group-hover:animate-bounce" />
                 Download CV
