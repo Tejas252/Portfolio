@@ -8,6 +8,7 @@ import { ExternalLink, Home, ChartBarBig, ForkKnife, FlaskRoundIcon, Cog, Github
 import { FloatingChat } from "@/components/floating-chat";
 import Link from "next/link"
 import Image from "next/image"
+import { AIFloatingChat } from "@/components/ai-floating-chat"
 
 const projects = [
   {
@@ -422,7 +423,7 @@ export default function ShowcasePage() {
       </div>
 
       {/* Floating Chatbot */}
-      <FloatingChat hideInput={true} />
+      <AIFloatingChat hideInput={true} />
     </div>
   )
 }
